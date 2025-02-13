@@ -1,34 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
+import Header from "./components/Header"
+import Footer from "./components/Footer"
+import Boton from "./components/Boton"
 
 function App() {
-  const [count, setCount] = useState(0)
+  let [count, setCount] = useState(524)
   const sum = () => {
-    let newCount = count + 1
-    setCount(newCount)
-    console.log(newCount)
+    setCount(count + 1)
+    console.log(count)
   }
   const nombre = "Hugo Reyes";
   const elemento = <h1>Hello, {nombre}</h1>;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p> 
-        <div>{count}</div>   
-        <button onClick={sum}>Sumar</button> 
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header></Header>
+      <Boton></Boton>
+      <Footer></Footer>
     </div>
   );
 }
