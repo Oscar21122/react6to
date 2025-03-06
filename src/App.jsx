@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Footer from "./components/Footer";
 import List from "./components/List";
 import Add from "./components/Add";
@@ -10,32 +10,60 @@ import Login from "./components/Login";
 import Welcome from "./components/Welcome";
 
 function App() {
-  const [items, setItems] = useState([
-    { id: 1, name: "item1", price: 1 },
-    { id: 2, name: "item2", price: 2 },
-    { id: 3, name: "item3", price: 3 },
-  ]);
-  let [count, setCount] = useState(0);
+  const [items, setItems] = useState([]);
+  // let [count, setCount] = useState(0);
   let [isLogin, setIsLogin] = useState(false);
+  useEffect(() => {
+    if (isLogin) {
+      getItems()
+    }
+  }, [isLogin])
 
-  const sum = () => {
-    setCount(count + 1);
+  const getItems = async () => {
+    try {
+      const result = await fetch("http://localhost:5001/items");
+      const data = await result.json();
+      console.log(data); // Verifica qué datos están siendo devueltos
+      setItems(data);
+    } catch (error) {
+      console.error("Error al obtener items:", error);
+    }
   };
-  const resta = () => {
-    setCount(count - 1);
+  
+
+  // const sum = () => {
+  //   setCount(count + 1);
+  // };
+  // const resta = () => {
+  //   setCount(count - 1);
+  // };
+  const add = async (item) => {
+    const result = await fetch("http://localhost:5001/items/", {
+      method:"POST",
+      headers:{"content-type": "application/json"},
+      body: JSON.stringify(item),
+    });
+    const data = await result.json()
+    setItems([...items, data.item]);
   };
-  const add = (item) => {
-    item.id = items.length + 1;
-    setItems([...items, item]);
-  };
-  const del = (id) => {
+  const del = async (id) => {
+    await fetch(`http://localhost:5001/items/${id}`, { method: "DELETE" });
     setItems(items.filter((item) => item.id !== id));
   };
-  const login = (user) => {
-    if (user.username==="oscar" && user.password==="123") {
-      setIsLogin(true)
-      return true
-    }
+  const login = async (user) => {
+    const result = await fetch("http://localhost:5001/login/", {
+      method:"POST",
+      headers:{"content-type": "application/json"},
+      body: JSON.stringify(user),
+    });
+      const data = await result.json();
+      setIsLogin(data.isLogin)
+      return data.isLogin
+
+    // if (user.username==="oscar" && user.password==="123") {
+    //   setIsLogin(true)
+    // }
+    // return true
   };
   const setLogout = () => {
     setIsLogin(false)
