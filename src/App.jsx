@@ -21,8 +21,8 @@ function App() {
 
   const getItems = async () => {
     const token = localStorage.getItem("token"); 
-    try {
-      const result = await fetch("http://localhost:5001/items", {
+    try { 
+      const result = await fetch("https://express6to.onrender.com/items", {
         headers: {
           "Authorization": `Bearer ${token}`,
         },
@@ -44,7 +44,7 @@ function App() {
   // };
   const add = async (item) => {
     const token = localStorage.getItem("token");
-    const result = await fetch("http://localhost:5001/items/", {
+    const result = await fetch("https://express6to.onrender.com/items/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ function App() {
 
   const del = async (id) => {
     const token = localStorage.getItem("token");
-    await fetch(`http://localhost:5001/items/${id}`, {
+    await fetch(`https://express6to.onrender.com/items/${id}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -70,7 +70,7 @@ function App() {
   
 
   const login = async (user) => {
-    const result = await fetch("http://localhost:5001/login/", {
+    const result = await fetch("https://express6to.onrender.com/login/", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(user),
