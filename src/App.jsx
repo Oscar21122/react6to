@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useState, useEffect } from "react";
 import Footer from "./components/Footer";
@@ -8,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ResponsiveAppBar from "./components/AppBar";
 import Login from "./components/Login";
 import Welcome from "./components/Welcome";
+import ItemInfo from "./components/ItemInfo";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -100,6 +100,7 @@ function App() {
         <Route path="/add" element={<Add add={add} />}/>
         <Route path="/items" element={<List items={items} ondelete={del} />}/>
         <Route path="/welcome" element={<Welcome />} />
+        <Route path="/items/:id" element={<ItemInfo items={items}/>} />
       </Routes>
       <Footer />
       </BrowserRouter>
