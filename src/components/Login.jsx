@@ -8,14 +8,16 @@ const Login = ({ login }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const onsubmit = (e) => {
+  const onsubmit = async (e) => { 
     e.preventDefault();
     if (!username || !password) {
       alert("Los campos no deben de estar vacios");
       return;
     }
-    const isLogin = login({username, password});
+    
+    const isLogin = await login({username, password}); 
     console.log(isLogin)
+    
     if (isLogin) {
       setUsername("");
       setPassword("");
